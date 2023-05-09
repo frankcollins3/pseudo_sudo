@@ -37,7 +37,7 @@ if (my_path == 'nopsql') {
 * * * sudo rm /usr/local/bin/pg_restore * * * 
 * * * sudo rm /usr/local/bin/postgres * * * 
 * * * sudo rm /usr/local/bin/psql * * *
-* * * * brew services stop postgresql * * *
+* * *  brew services stop postgresql * * *
 
 5) Remove the Postgres application directory by running the following command:
 * * * sudo rm -rf /Applications/Postgres.app/ * * * 
