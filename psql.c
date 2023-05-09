@@ -3,15 +3,26 @@
 #include <stdlib.h>
 
 int main() {
-    char myNumbers[256] = "postgres 96647 medium    7u  IPv6 0x67f00f407f2f5497      0t0  TCP localhost:postgresql (LISTEN)";
-    char numString[6] = {0}; // Initialize to all zeroes
-    int num = 0;
+        char sentence[100];
+        char *findport = "lsof -i :5432";  // sudo lsof-i 5432 
+        int status = system(findport);
+        char buffer[1024];
+        FILE *pipe = popen(findport, "r");
+        char myNumbers[256] = "postgres 96647 medium    7u  IPv6 0x67f00f407f2f5497      0t0  TCP localhost:postgresql (LISTEN)";
+        char numString[6] = {0}; // Initialize to all zeroes
+        int num = 0;
 
-    // Loop over the characters in the string and extract the first 5 numbers
-    for (int i = 0; i < strlen(myNumbers); i++) {
-        if (myNumbers[i] >= '0' && myNumbers[i] <= '9') {
+    if (!pipe) {
+        printf("Failed to execute command\n");
+        return -1;
+    }
+    while (fgets(buffer, sizeof(buffer), pipe) != NULL) {
+        printf("%s", buffer);
+    }
+    for (int i = 0; i < strlen(buffer); i++) {
+        if (buffer[i] >= '0' && buffer[i] <= '9') {
             // If the character is a digit, add it to the numString
-            numString[strlen(numString)] = myNumbers[i];
+            numString[strlen(numString)] = buffer[i];
 
             // If we have extracted 5 digits, break out of the loop
             if (strlen(numString) == 5) {
@@ -20,7 +31,6 @@ int main() {
         }
     }
 
-    // Convert the numString to an integer and print the result
     num = atoi(numString);
     printf("The first 5 numbers in the string are: %05d\n", num);
 
