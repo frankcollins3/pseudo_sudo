@@ -1,2 +1,2 @@
 # pseudo_sudo
-C program: shorthand expressions that executed sets of terminal commands using system()
+C program: shorthand expressions that execute sets of terminal commands using system()
