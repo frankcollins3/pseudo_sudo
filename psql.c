@@ -2,41 +2,36 @@
 #include <string.h>
 #include <stdlib.h>
 
-
 int main () {
     char sentence[100];
-    char *findport = "sudo lsof -i 5432";
-    int status = system(findport);
+    char *findport = "lsof -i 5432"; 
+    // sudo lsof-i 5432 
+    char buffer[1024];
+    FILE *pipe = popen(findport, "r");
+    int status;
 
-    if (status == -1) {
-        printf("nothing happened\n");
-    } else {
-        printf("something happened!\n");
-        printf("heres what happened:\t %s \n", findport);
+    if (!pipe) {
+        printf("Failed to execute command\n");
+        return -1;
     }
 
-    printf("please print sentence!\n");
+    while (fgets(buffer, sizeof(buffer), pipe) != NULL) {
+        printf("%s", buffer);
+    }
+
+    status = pclose(pipe);
+
+    if (status == -1) {
+        printf("Command execution failed\n");
+    } else {
+        printf("Command returned status %d\n", status);
+    }
+
+    printf("Please enter a sentence:\n");
     fgets(sentence, sizeof(sentence), stdin);
-    printf("heres my sentence:\t %s \n", sentence);
+    printf("Here's my sentence: %s\n", sentence);
 
     return 0;
 }
 
-// int main () {
-//    char commando[20];
-//    char go;
-  
-//     while (go == 'g') {
-//    fgets(commando, sizeof(commando), stdin);
-  
-//       if (commando === "nopsql") {
 
-//       }
-      
-//      system() // like system("cls");  
-   
-//      scanf("% ^[\n], &go); 
-//   }
-  
-//   return 0;
-// }
