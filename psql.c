@@ -4,7 +4,7 @@
 
 int main () {
     char sentence[100];
-    char *findport = "lsof -i 5432"; 
+    char *findport = "lsof -i :5432"; 
     // sudo lsof-i 5432 
     char buffer[1024];
     FILE *pipe = popen(findport, "r");
