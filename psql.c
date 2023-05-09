@@ -34,4 +34,28 @@ int main () {
     return 0;
 }
 
+// Test.c () => 
+
+// #include <stdio.h>
+// #include <regex.h>
+// #include <string.h>
+
+// int main() {
+//     char myNumbers[256] = "postgres 96647 medium    7u  IPv6 0x67f00f407f2f5497      0t0  TCP localhost:postgresql (LISTEN)";
+//     regex_t regex;
+//     regmatch_t match[2];
+
+//     return 0;
+// }
+
+// I created a test file. I'm having trouble implementing a regex that removes my number.
+
+// looking back at the C program (trash dummy) that parses user input for their desktop username,
+
+// the goal is to take this string:
+
+//     char myNumbers[256] = "postgres 96647 medium    7u  IPv6 0x67f00f407f2f5497      0t0  TCP localhost:postgresql (LISTEN)";
+
+// "postgres 96647 medium" and reduce it to this screen. medium is my desktop name. Parse user input for their desktop name and cut the string off at that word (if possible)
+
 
