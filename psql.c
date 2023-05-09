@@ -2,60 +2,27 @@
 #include <string.h>
 #include <stdlib.h>
 
-int main () {
-    char sentence[100];
-    char *findport = "lsof -i :5432"; 
-    // sudo lsof-i 5432 
-    char buffer[1024];
-    FILE *pipe = popen(findport, "r");
-    int status;
+int main() {
+    char myNumbers[256] = "postgres 96647 medium    7u  IPv6 0x67f00f407f2f5497      0t0  TCP localhost:postgresql (LISTEN)";
+    char numString[6] = {0}; // Initialize to all zeroes
+    int num = 0;
 
-    if (!pipe) {
-        printf("Failed to execute command\n");
-        return -1;
+    // Loop over the characters in the string and extract the first 5 numbers
+    for (int i = 0; i < strlen(myNumbers); i++) {
+        if (myNumbers[i] >= '0' && myNumbers[i] <= '9') {
+            // If the character is a digit, add it to the numString
+            numString[strlen(numString)] = myNumbers[i];
+
+            // If we have extracted 5 digits, break out of the loop
+            if (strlen(numString) == 5) {
+                break;
+            }
+        }
     }
 
-    while (fgets(buffer, sizeof(buffer), pipe) != NULL) {
-        printf("%s", buffer);
-    }
-
-    status = pclose(pipe);
-
-    if (status == -1) {
-        printf("Command execution failed\n");
-    } else {
-        printf("Command returned status %d\n", status);
-    }
-
-    printf("Please enter a sentence:\n");
-    fgets(sentence, sizeof(sentence), stdin);
-    printf("Here's my sentence: %s\n", sentence);
+    // Convert the numString to an integer and print the result
+    num = atoi(numString);
+    printf("The first 5 numbers in the string are: %05d\n", num);
 
     return 0;
 }
-
-// Test.c () => 
-
-// #include <stdio.h>
-// #include <regex.h>
-// #include <string.h>
-
-// int main() {
-//     char myNumbers[256] = "postgres 96647 medium    7u  IPv6 0x67f00f407f2f5497      0t0  TCP localhost:postgresql (LISTEN)";
-//     regex_t regex;
-//     regmatch_t match[2];
-
-//     return 0;
-// }
-
-// I created a test file. I'm having trouble implementing a regex that removes my number.
-
-// looking back at the C program (trash dummy) that parses user input for their desktop username,
-
-// the goal is to take this string:
-
-//     char myNumbers[256] = "postgres 96647 medium    7u  IPv6 0x67f00f407f2f5497      0t0  TCP localhost:postgresql (LISTEN)";
-
-// "postgres 96647 medium" and reduce it to this screen. medium is my desktop name. Parse user input for their desktop name and cut the string off at that word (if possible)
-
-
