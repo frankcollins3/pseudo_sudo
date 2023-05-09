@@ -2,10 +2,20 @@
 #include <string.h>
 #include <stdlib.h>
 
+    int get_status(char c[])
+{
+    int status = system(c);
+    return status;
+}
+
 int main() {
         char sentence[100];
         char *findport = "lsof -i :5432";  // sudo lsof-i 5432 
-        int status = system(findport);
+        char kill_statement[15] = "kill ";
+        char kill_port[10] = " ";
+        // int status = system(findport);
+        int find_port_status;
+
         char buffer[1024];
         FILE *pipe = popen(findport, "r");
         char myNumbers[256] = "postgres 96647 medium    7u  IPv6 0x67f00f407f2f5497      0t0  TCP localhost:postgresql (LISTEN)";
@@ -31,8 +41,13 @@ int main() {
         }
     }
 
-    num = atoi(numString);
-    printf("The first 5 numbers in the string are: %05d\n", num);
+    find_port_status =  get_status(findport);
+    printf("heres my number:\t %d \n", find_port_status);    
+
+    // num = atoi(numString);
+    // printf("The first 5 numbers in the string are: %05d\n", num);
+    // char kill_port_2[10] = strcat(kill_statement, num);
+    // system(kill_port_2);
 
     return 0;
 }
