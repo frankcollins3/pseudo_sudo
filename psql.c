@@ -12,9 +12,9 @@ int main() {
         char sentence[100];
         char *findport = "lsof -i :5432";  // sudo lsof-i 5432 
         char kill_statement[15] = "kill ";
-        char kill_port[10] = " ";
-        // int status = system(findport);
+        // int status = system(findport);       // created callback
         int find_port_status;
+        int kill_port_status;
 
         char buffer[1024];
         FILE *pipe = popen(findport, "r");
@@ -44,10 +44,14 @@ int main() {
     find_port_status =  get_status(findport);
     printf("heres my number:\t %d \n", find_port_status);    
 
-    // num = atoi(numString);
-    // printf("The first 5 numbers in the string are: %05d\n", num);
-    // char kill_port_2[10] = strcat(kill_statement, num);
-    // system(kill_port_2);
+    if (find_port_status == 0) {        
+    num = atoi(numString);
+    printf("The first 5 numbers in the string are: %05d\n", num);
+    // char kill_port[10] = strcat(kill_statement, num);
+    // int kill_port_status = get_status(kill_port);
+    // printf("kill status:\t %d \n", kill_port_status);
+
+    }
 
     return 0;
 }
